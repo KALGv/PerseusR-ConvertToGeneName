@@ -24,7 +24,7 @@ df <- colMatrix
 UniprotDB <- read.delim("~/Perseus_R/uniprot-reviewed_yes+taxonomy_9606.tab")
 
 library(dplyr)
-# Leave only the first Gene name of 「Gene.names」 column
+# Leave only the first Gene name of Gene.names column
 UniprotDB$Gene_name <- substr(UniprotDB$Gene.names, 1, str_locate(string = UniprotDB$Gene.names, pattern = " |$")-1)
 UniprotDB <- select(UniprotDB, Entry, Gene_name)
 df <- merge(df, 
@@ -33,6 +33,6 @@ df <- merge(df,
             by.y = "Entry",
             all.x = TRUE)
 
-#Protein without gene name is 「-」
+#Protein without gene name is -
 df$Gene_name[is.na(df$Gene_name)] <- "-"
 write.perseus(df, outFile)
